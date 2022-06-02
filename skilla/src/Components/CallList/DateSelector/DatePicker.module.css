@@ -1,0 +1,10 @@
+.datePickerInput {
+  width: 125px;
+  border: none;
+  outline: none;
+}
+
+.datePickerInput input:active {
+  width: 125px;
+  border: none;
+}

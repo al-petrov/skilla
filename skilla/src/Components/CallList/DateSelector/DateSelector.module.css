@@ -1,0 +1,99 @@
+.selector {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.selector div:first-child {
+  width: 27px;
+  justify-content: flex-start;
+}
+
+.selector div:last-child {
+  width: 27px;
+  justify-content: flex-end;
+}
+
+.test {
+  display: flex;
+  height: 18px;
+  align-items: center;
+  min-width: 20px;
+  fill: #adbfdf;
+}
+
+.test svg {
+  fill: #adbfdf;
+}
+
+.test svg:hover {
+  fill: #005ff8;
+}
+
+.dateSelector {
+  width: 204px;
+}
+
+.myDateSelector {
+  color: #005ff8;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  justify-content: flex-end;
+}
+
+.dropdown {
+  position: relative;
+  width: 204px;
+  display: inline-block;
+  justify-items: flex-end;
+  align-items: center;
+  border: 0px;
+}
+
+.menuItem {
+  padding-left: 20px;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 0px;
+  cursor: pointer;
+}
+
+.menuItem:hover {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  background-color: #005ff813;
+}
+
+.dateRange {
+  padding-left: 20px;
+  height: 79px;
+}
+
+.dateRangePicker {
+  color: #adbfdf;
+  border: none;
+}
+
+.dateRangePicker:active {
+  background-color: #005ff8;
+  color: #adbfdf;
+  border: none;
+}
+
+.dropdownContent {
+  display: none;
+}
+
+.show {
+  display: block;
+  margin-top: 11px;
+  position: absolute;
+  background-color: #ffffff;
+  min-width: 204px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}

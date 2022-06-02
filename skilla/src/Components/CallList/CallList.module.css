@@ -1,0 +1,17 @@
+.listWrapper {
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+
+.listHat {
+  display: flex;
+  height: 61px;
+  align-items: center;
+}
+
+.dateSelector {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  height: 67px;
+}

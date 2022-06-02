@@ -1,0 +1,126 @@
+.logo {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  margin-left: 12px;
+}
+
+.myHeader {
+  display: flex;
+  height: 64px;
+  align-items: center;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  height: 52px;
+}
+
+.menuItem a:hover {
+  color: #ffffff;
+}
+.menuItem a {
+  font-family: "SFProDisplay";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  color: #ffffff99;
+}
+
+.menuItemSelected {
+  display: flex;
+  align-items: center;
+  height: 52px;
+  background-color: #d8e4fb52;
+  border-left: 3px solid #1890ff;
+}
+
+.menuItemSelected a {
+  font-family: "SFProDisplay";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  color: #ffffff;
+}
+
+.menuItemText {
+  font-family: "SFProDisplay";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  margin-left: 15px;
+  color: #ffffff99;
+}
+
+.menuItemTextSelected {
+  font-family: "SFProDisplay";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  margin-left: 15px;
+  color: #ffffff;
+}
+
+.newMenu {
+  position: absolute;
+  margin-top: 8px;
+  right: 0;
+}
+
+.my-ant-layaut-content {
+  background: #f1f4f9;
+}
+
+.my-ant-layaut-sider {
+  min-height: 100vh;
+  background: #091336;
+}
+
+.site-layout-sub-header-background {
+  background: #ffffff;
+  font-family: "SFProDisplay";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 148%;
+  color: #899cb1;
+}
+
+.currentDate {
+  display: flex;
+  /* width: 141px; */
+  align-items: center;
+}
+
+.headerImg {
+  margin-left: 86px;
+}
+
+.searchImg {
+  margin-left: 197px;
+}
+
+.userName {
+  margin-left: 64px;
+}
+
+.headerTriangle {
+  margin-left: 10px;
+}
+
+.avatar {
+  margin-left: 47px;
+}
+
+.site-layout-background {
+  background: #ffffff;
+}

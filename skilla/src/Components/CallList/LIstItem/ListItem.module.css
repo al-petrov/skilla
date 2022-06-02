@@ -1,0 +1,100 @@
+@font-face {
+  font-family: "SFProDisplay";
+  src: local("SFProDisplay"),
+    url(../../../fonts/SFProDisplayRegular.woff) format("woff");
+  /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+
+.listItem {
+  display: flex;
+  height: 65px;
+  align-items: center;
+}
+
+.itemCheck {
+  margin-left: 12px;
+  background: #adbfdf;
+  border: 2px;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.26);
+}
+
+.callArrow {
+  height: 16px;
+  width: 16px;
+}
+
+.callType {
+  height: 12.52173900604248px;
+  width: 12.52173900604248px;
+  left: 6px;
+  top: 6px;
+  border-radius: 0px;
+}
+
+.callTime {
+  margin-left: 37px;
+  width: 38px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0em;
+  text-align: right;
+}
+
+.avatar img {
+  margin-left: 48px;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+}
+
+.border {
+  display: flex;
+  margin-left: 18px;
+  height: 65px;
+  width: 100%;
+  align-items: center;
+  border-bottom: 1px solid #eaf0fa;
+}
+
+.web {
+  margin-left: 45px;
+  width: 16px;
+  height: 16px;
+}
+
+.phone {
+  margin-left: 11px;
+  width: 16px;
+  height: 16px;
+}
+
+.nameBlock {
+  margin-left: 6px;
+  width: 246px;
+}
+
+.name {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  color: #122945;
+}
+
+.company {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  color: #5e7793;
+}
+
+.source {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  color: #5e7793;
+}
