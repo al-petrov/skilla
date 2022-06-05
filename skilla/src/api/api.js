@@ -34,4 +34,27 @@ export const api = {
         console.log(err.response);
       });
   },
+
+  getRecord(record, partnership) {
+    return fetch(
+      "https://api.skilla.ru/mango/getRecord?record=" +
+        record +
+        "&partnership_id=" +
+        partnership,
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer testtoken",
+        },
+      }
+    )
+      .then((response) => {
+        return response;
+      })
+
+      .catch((err) => {
+        console.log("hi");
+        console.log(err.response);
+      });
+  },
 };

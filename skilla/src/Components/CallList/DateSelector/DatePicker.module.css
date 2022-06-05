@@ -1,10 +1,28 @@
+.datePicker {
+  display: flex;
+  width: 130px;
+  align-items: center;
+}
+
+.datePickerIcon {
+  align-items: center;
+  margin-left: 29px;
+}
+
+.datePickerIcon svg {
+  fill: #adbfdf;
+}
+
 .datePickerInput {
-  width: 125px;
+  width: 116px;
+  height: 40px;
   border: none;
   outline: none;
+  color: #adbfdf;
 }
 
 .datePickerInput input:active {
   width: 125px;
   border: none;
+  color: #122945;
 }

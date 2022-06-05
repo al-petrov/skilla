@@ -13,5 +13,28 @@
   display: flex;
   justify-content: flex-end;
   width: 100%;
-  height: 67px;
+  height: 80px;
+  align-items: center;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 55px;
+}
+
+.empFilterElement {
+  display: flex;
+  align-items: flex-start;
+}
+
+.empFilterElement img {
+  height: 32px;
+  width: 32px;
+  border-radius: 16px;
+}
+
+.empName {
+  margin-left: 5px;
 }

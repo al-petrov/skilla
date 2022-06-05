@@ -20,6 +20,7 @@
   align-items: center;
   min-width: 20px;
   fill: #adbfdf;
+  cursor: pointer;
 }
 
 .test svg {
@@ -38,13 +39,12 @@
   color: #005ff8;
   font-size: 14px;
   font-weight: 400;
-  cursor: pointer;
   justify-content: flex-end;
 }
 
 .dropdown {
   position: relative;
-  width: 204px;
+  /* width: 204px; */
   display: inline-block;
   justify-items: flex-end;
   align-items: center;
@@ -59,13 +59,33 @@
   align-items: center;
   border-radius: 0px;
   cursor: pointer;
+  color: #899cb1;
 }
 
 .menuItem:hover {
   height: 40px;
   display: flex;
   align-items: center;
-  background-color: #005ff813;
+  color: #122945;
+  background-color: #005ff838;
+}
+
+.menuItemSelected {
+  padding-left: 20px;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 0px;
+  cursor: pointer;
+  color: #005ff8;
+}
+
+.menuItemSelected:hover {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  background-color: #005ff838;
 }
 
 .dateRange {
@@ -90,10 +110,30 @@
 
 .show {
   display: block;
-  margin-top: 11px;
+  margin-top: 10px;
+  justify-content: left;
+  float: right;
+  /* margin-left: 50px; */
   position: absolute;
+  right: 0;
   background-color: #ffffff;
   min-width: 204px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+}
+
+.balance {
+  display: flex;
+  width: 145px;
+  margin-right: 145px;
+  align-items: flex-end;
+  align-items: center;
+}
+
+.balance img {
+  /* position: absolute; */
+  /* margin-right: 150px; */
+  /* right: 150px; */
+  width: 145px;
+  height: 40px;
 }

@@ -68,7 +68,7 @@ const App = () => {
           <div className={"menuItemText" + selected}>{item.title}</div>
           {selected ? (
             <div className="newMenu">
-              <img src={newMenu} />
+              <img src={newMenu} alt={"пункт меню"} />
             </div>
           ) : null}
         </div>
@@ -111,17 +111,25 @@ const App = () => {
           <Header className="site-layout-sub-header-background">
             <div className="myHeader">
               <div className="currentDate">{stringDate}</div>
-              <img className="headerImg" src={callAnalitics} />
-              <img className="searchImg" src={search} />
+              <img
+                className="headerImg"
+                src={callAnalitics}
+                alt={"аналитика звонков"}
+              />
+              <img className="searchImg" src={search} alt={"поиск"} />
               <div className="userName">ИП Сидорова Александра Михайловна</div>
-              <img className="headerTriangle" src={triangle} />
-              <img className="avatar" src={avatar} />
+              <img
+                className="headerTriangle"
+                src={triangle}
+                alt={"свойства учетной записи"}
+              />
+              <img className="avatar" src={avatar} alt={"аватар"} />
             </div>
           </Header>
           <Content
             className="my-ant-layaut-content"
             style={{
-              margin: "50px 120px 0",
+              margin: "0px 120px 0",
             }}
           >
             <Routes>

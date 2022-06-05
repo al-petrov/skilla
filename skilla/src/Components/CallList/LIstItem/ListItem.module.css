@@ -1,11 +1,3 @@
-@font-face {
-  font-family: "SFProDisplay";
-  src: local("SFProDisplay"),
-    url(../../../fonts/SFProDisplayRegular.woff) format("woff");
-  /* other formats include: 'woff2', 'truetype, 'opentype',
-                            'embedded-opentype', and 'svg' */
-}
-
 .listItem {
   display: flex;
   height: 65px;
@@ -94,7 +86,41 @@ input[type="checkbox"] {
 
 .source {
   font-style: normal;
+  margin-left: 72px;
+  min-width: 197;
   font-weight: 400;
   font-size: 15px;
   color: #5e7793;
+}
+
+.record {
+  display: flex;
+  width: 100%;
+  margin-right: 40px;
+  align-items: center;
+  justify-content: flex-end;
+  font-weight: 400;
+  font-size: 15px;
+  color: #122945;
+}
+
+.player {
+  display: flex;
+  align-items: center;
+  background-color: #eaf0fa;
+  border-radius: 48px;
+  min-width: 352px;
+  height: 48px;
+  padding-left: 19px;
+}
+
+.playButton {
+  width: 24px;
+  height: 24px;
+  margin: 12px;
+}
+
+.audioPlayer {
+  height: 48px;
+  color: #eaf0fa;
 }
