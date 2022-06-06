@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { api } from "../../api/api";
 import { Skeleton, Space } from "antd";
 import ListItem from "./LIstItem/ListItem";
+import useAudioPlayer from "./LIstItem/useAudioPlayer";
 import DateSelector from "./DateSelector/DateSelector";
 import InfiniteScroll from "react-infinite-scroll-component";
 import MyFilter from "./Filters/Filter";
@@ -27,10 +28,10 @@ const CallList = () => {
     marks: null,
     mistakes: null,
   });
-  let [sound, setSound] = useState(prodigy);
-  let [play, { stop, isPlaying }] = useSound(sound, { volume: 0.2 });
+  let [currentPlaying, setCurrentPlaying] = useState("");
 
-  // let [inOut, setInOut] = useState("1");
+  const { curTime, duration, playing, setSource, setPlaying, setClickedTime } =
+    useAudioPlayer();
 
   let [dateStart, dateEnd] = dates;
 
@@ -40,16 +41,28 @@ const CallList = () => {
     loadwithDates();
   }, [dates, currentFilters]);
 
-  // useEffect(() => {
-  //    play();
-  // }, [sound]);
+  useEffect(() => {
+    console.log(curTime, duration);
+  }, [curTime, duration]);
 
-  const setNewAudio = (newFile) => {
-    setSound(newFile);
+  const setNewAudio = (blobUrl, id) => {
+    if (id != currentPlaying) {
+      setSource(blobUrl);
+      setCurrentPlaying(id);
+      setPlaying(true);
+    } else {
+      setPlaying(true);
+    }
+    // setSource(blobUrl);
+    // setSound(newFile);
   };
 
-  const pauseAudio = (newFile) => {
-    stop();
+  // const setPlay = () =
+
+  const pauseAudio = (blobUrl) => {
+    setPlaying();
+
+    // stop();
   };
 
   const loadMoreData = () => {
@@ -127,8 +140,12 @@ const CallList = () => {
     return (
       <ListItem
         key={item.id}
+        id={item.id}
         setNewAudio={setNewAudio}
         pauseAudio={pauseAudio}
+        playerValues={
+          currentPlaying === item.id ? { curTime, duration, playing } : null
+        }
         {...item}
       />
     );
@@ -211,6 +228,9 @@ const CallList = () => {
       > */}
       <div className={myStyles.listWrapper}>
         <div className={myStyles.listHat}>
+          <audio id="myAudio">
+            <source src="" />
+          </audio>
           <input type="checkbox" />
           <div>Тип</div>
         </div>

@@ -111,16 +111,24 @@ input[type="checkbox"] {
   border-radius: 48px;
   min-width: 352px;
   height: 48px;
-  padding-left: 19px;
+  /* padding-left: 19px; */
 }
 
 .playButton {
   width: 24px;
   height: 24px;
-  margin: 12px;
+  margin-left: 12px;
 }
 
 .audioPlayer {
   height: 48px;
   color: #eaf0fa;
+}
+
+.duration {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 37px;
+  margin-left: 19px;
 }

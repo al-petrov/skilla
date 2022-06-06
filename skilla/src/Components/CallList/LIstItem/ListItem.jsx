@@ -1,5 +1,5 @@
 import myStyles from "./ListItem.module.css";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import inCallBlue from "../../../icons/inCallBlue.svg";
 import inCallRed from "../../../icons/inCallRed.svg";
 import outCallGreen from "../../../icons/outCallRed.svg";
@@ -11,12 +11,26 @@ import play from "./../../../icons/play.svg";
 import pause from "./../../../icons/pause.svg";
 import { api } from "../../../api/api";
 import ReactAudioPlayer from "react-audio-player";
+import useAudioPlayer from "./useAudioPlayer";
 
 const ListItem = (props) => {
   let [hovered, setHovered] = useState(false);
-  let [playing, setPlaying] = useState(false);
+  let [nowPlaying, setNowPlaying] = useState(false);
   let [loading, setLoading] = useState(false);
-  let [audioSource, setAudioSource] = useState("");
+  let [playerValues, setPlayerValues] = useState();
+
+  useEffect(() => {
+    if (props.playerValues) {
+      setPlayerValues(props.playerValues);
+      // if (time) {
+      //   let minutes = Math.floor(time / 60);
+      //   let seconds = Math.floor(time - minutes * 60);
+      //   seconds = seconds < 10 ? "0" + seconds : seconds;
+      //   durationString = "" + minutes + ":" + seconds;
+      // }
+      console.log(props.playerValues);
+    }
+  }, [props.playerValues]);
 
   const typeCallImage =
     props.in_out === 1
@@ -32,45 +46,46 @@ const ListItem = (props) => {
     ":" +
     callDate.getMinutes().toString().padStart(2, "0");
 
-  let durationString = "";
-  if (props.time) {
-    let minutes = Math.floor(props.time / 60);
-    let seconds = props.time - minutes * 60;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-    durationString = "" + minutes + ":" + seconds;
-  }
+  // let durationString = "";
+  // let time = props.playerValues ? props.playerValues.duration : props.time;
+  // if (time) {
+  //   let minutes = Math.floor(time / 60);
+  //   let seconds = Math.floor(time - minutes * 60);
+  //   seconds = seconds < 10 ? "0" + seconds : seconds;
+  //   durationString = "" + minutes + ":" + seconds;
+  // }
 
-  const getRecord = (record, partnership) => {
+  const getRecord = (record, partnership, id) => {
     setLoading(true);
     api.getRecord(record, partnership).then((resp) => {
       if (resp.status === 200) {
-        let reader = resp.body.getReader();
-        reader.read().then((result) => {
-          let blob = new Blob([result.value], { type: "audio/mp3" });
-
-          const url = window.URL.createObjectURL(blob);
-          setAudioSource(url);
-          //props.setNewAudio(blob);
-          // window.audio = new Audio();
-          // window.audio.src = url;
-          // window.audio.play();
-          //props.setNewAudio(result);
+        resp.blob().then((result) => {
+          const url = window.URL.createObjectURL(result);
+          props.setNewAudio(url, id);
+          setNowPlaying(true);
         });
-        props.setNewAudio(resp.body);
       }
     });
   };
 
-  const playPause = (record, partnership) => {
-    if (!playing) {
-      getRecord(record, partnership);
-      // setPlaying(!playing);
-
-      console.log(record, partnership);
+  const playPause = (record, partnership, id) => {
+    if (!nowPlaying) {
+      getRecord(record, partnership, id);
+      console.log(record, partnership, id);
     } else {
       props.pauseAudio();
+      setNowPlaying(false);
     }
-    setPlaying(!playing);
+  };
+
+  const getDurationString = () => {
+    let time = props.playerValues ? props.playerValues.curTime : props.time;
+    if (time) {
+      let minutes = Math.floor(time / 60);
+      let seconds = Math.floor(time - minutes * 60);
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      return "" + minutes + ":" + seconds;
+    }
   };
 
   return (
@@ -101,23 +116,17 @@ const ListItem = (props) => {
         <div className={myStyles.source}>{props.source}</div>
         <img src={listButton} />
         <div className={myStyles.record}>
-          {durationString ? (
+          {props.time ? (
             <div className={myStyles.player}>
-              {durationString}
-              <div
-                className={myStyles.playButton}
-                onClick={() => {
-                  playPause(props.record, props.partnership_id);
-                }}
-              >
-                <img src={playing ? pause : play} />
+              <div className={myStyles.duration}>{getDurationString()}</div>
+              <div className={myStyles.playerButton}>
+                <img
+                  src={nowPlaying ? pause : play}
+                  onClick={() =>
+                    playPause(props.record, props.partnership_id, props.id)
+                  }
+                />
               </div>
-              <ReactAudioPlayer
-                src={audioSource}
-                className={myStyles.audioPlayer}
-                autoPlay
-                controls
-              />
             </div>
           ) : null}
         </div>
