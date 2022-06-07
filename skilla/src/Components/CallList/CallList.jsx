@@ -8,8 +8,6 @@ import useAudioPlayer from "./LIstItem/useAudioPlayer";
 import DateSelector from "./DateSelector/DateSelector";
 import InfiniteScroll from "react-infinite-scroll-component";
 import MyFilter from "./Filters/Filter";
-import useSound from "use-sound";
-import prodigy from "./../../icons/prodigy.mp3";
 
 const CallList = () => {
   let [data, setData] = useState([]);
@@ -41,12 +39,9 @@ const CallList = () => {
     loadwithDates();
   }, [dates, currentFilters]);
 
-  useEffect(() => {
-    console.log(curTime, duration);
-  }, [curTime, duration]);
-
-  const setNewAudio = (blobUrl, id) => {
+  const setNewAudio = (id, blobUrl) => {
     if (id != currentPlaying) {
+      setPlaying(false);
       setSource(blobUrl);
       setCurrentPlaying(id);
       setPlaying(true);
@@ -59,8 +54,8 @@ const CallList = () => {
 
   // const setPlay = () =
 
-  const pauseAudio = (blobUrl) => {
-    setPlaying();
+  const pauseAudio = () => {
+    setPlaying(false);
 
     // stop();
   };
@@ -68,7 +63,6 @@ const CallList = () => {
   const loadMoreData = () => {
     setLoading(true);
     api.getData(dateStart, dateEnd, pageSize, nextPage).then((resp) => {
-      console.log(resp);
       setDataCount(resp.total_rows);
       setData([resp.results, ...resp.results]);
       setLoading(false);
@@ -86,7 +80,6 @@ const CallList = () => {
         currentFilters.callTypes
       )
       .then((resp) => {
-        console.log(resp);
         setDataCount(resp.total_rows);
         setData(resp.results);
         setLoading(false);
@@ -143,9 +136,11 @@ const CallList = () => {
         id={item.id}
         setNewAudio={setNewAudio}
         pauseAudio={pauseAudio}
+        setClickedTime={setClickedTime}
         playerValues={
           currentPlaying === item.id ? { curTime, duration, playing } : null
         }
+        nowPlaying={currentPlaying === item.id ? playing : null}
         {...item}
       />
     );

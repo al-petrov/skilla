@@ -1,0 +1,16 @@
+.bar {
+  user-select: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.barProgress {
+  flex: 1;
+  border-radius: 5px;
+  margin: 0 8px;
+  height: 4px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}

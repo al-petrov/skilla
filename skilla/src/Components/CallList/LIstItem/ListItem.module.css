@@ -111,13 +111,33 @@ input[type="checkbox"] {
   border-radius: 48px;
   min-width: 352px;
   height: 48px;
-  /* padding-left: 19px; */
+  padding: 0 20px;
+}
+
+.player svg {
+  margin: 0 10px;
+  fill: #adbfdf;
+  cursor: pointer;
+}
+
+.player svg:hover {
+  fill: #005ff8;
+}
+
+.player:last-child {
+  margin-right: 21px;
 }
 
 .playButton {
+  outline: none;
   width: 24px;
   height: 24px;
   margin-left: 12px;
+}
+.playButton button {
+  padding: 0;
+  border: none;
+  cursor: pointer;
 }
 
 .audioPlayer {
@@ -130,5 +150,4 @@ input[type="checkbox"] {
   align-items: center;
   justify-content: flex-end;
   min-width: 37px;
-  margin-left: 19px;
 }

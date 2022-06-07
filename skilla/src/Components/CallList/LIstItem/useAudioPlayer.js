@@ -17,13 +17,12 @@ function useAudioPlayer() {
 
     const setAudioTime = () => {
       setCurTime(audio.currentTime);
-      // console.log(audio.currentTime);
     };
 
     audio.addEventListener("loadeddata", setAudioData);
     audio.addEventListener("timeupdate", setAudioTime);
 
-    if (audio.src !== source) {
+    if (source && audio.src !== source) {
       audio.src = source;
     }
 

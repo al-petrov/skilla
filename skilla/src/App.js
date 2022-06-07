@@ -95,12 +95,6 @@ const App = () => {
           breakpoint="lg"
           collapsedWidth="0"
           width="240px"
-          onBreakpoint={(broken) => {
-            //console.log(broken);
-          }}
-          onCollapse={(collapsed, type) => {
-            //console.log(collapsed, type);
-          }}
         >
           <div className="logo">
             <img src={myLogo} height="40px" alt="Skilla Logo" />

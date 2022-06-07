@@ -53,7 +53,7 @@ export const api = {
       })
 
       .catch((err) => {
-        console.log("hi");
+        console.log("error");
         console.log(err.response);
       });
   },
