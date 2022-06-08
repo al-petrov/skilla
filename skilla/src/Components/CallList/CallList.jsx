@@ -169,6 +169,9 @@ const CallList = () => {
 
   return (
     <div>
+      <audio id="myAudio">
+        <source src="" />
+      </audio>
       <div className={myStyles.dateSelector}>
         <DateSelector
           dateStart={dateStart}
@@ -223,11 +226,17 @@ const CallList = () => {
       > */}
       <div className={myStyles.listWrapper}>
         <div className={myStyles.listHat}>
-          <audio id="myAudio">
-            <source src="" />
-          </audio>
           <input type="checkbox" />
           <div>Тип</div>
+          <div>Время</div>
+          <div>Сотрудник</div>
+          <div></div>
+          <div></div>
+          <div>Звонок</div>
+
+          <div>Источник</div>
+          <div>Оценка</div>
+          <div className={myStyles.duration}>Длительность</div>
         </div>
         {loading ? skeletons : rows}
       </div>
