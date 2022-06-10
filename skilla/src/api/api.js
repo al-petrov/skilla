@@ -13,7 +13,7 @@ export const api = {
       url += `&limit=${pageSize}`;
     }
     if (currentPage) {
-      url += `&offset=${currentPage}`;
+      url += `&offset=${currentPage * pageSize}`;
     }
     if (url) {
       url = "?" + url;

@@ -1,0 +1,17 @@
+.columnTitle {
+  display: flex;
+}
+
+.columnHat {
+  display: inline-block;
+  border: 0px;
+  cursor: pointer;
+}
+
+.columnHat:hover {
+  display: inline-block;
+  color: #005ff8;
+  align-items: center;
+  border: 0px;
+  cursor: pointer;
+}

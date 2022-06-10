@@ -8,17 +8,18 @@ import useAudioPlayer from "./LIstItem/useAudioPlayer";
 import DateSelector from "./DateSelector/DateSelector";
 import InfiniteScroll from "react-infinite-scroll-component";
 import MyFilter from "./Filters/Filter";
+import MyColumn from "./Columns/Column";
 
 const CallList = () => {
-  let [data, setData] = useState([]);
-  let [dataCount, setDataCount] = useState(0);
-  let [dates, setDates] = useState([
+  const [data, setData] = useState([]);
+  const [dataCount, setDataCount] = useState(0);
+  const [dates, setDates] = useState([
     new Date(new Date().setDate(new Date().getDate() - 3)),
     new Date(),
   ]);
-  let [nextPage, setNextPage] = useState(4);
-  let [loading, setLoading] = useState(false);
-  let [currentFilters, setCurrentFilters] = useState({
+  const [nextPage, setNextPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [currentFilters, setCurrentFilters] = useState({
     callTypes: null,
     persons: null,
     calls: null,
@@ -26,18 +27,43 @@ const CallList = () => {
     marks: null,
     mistakes: null,
   });
-  let [currentPlaying, setCurrentPlaying] = useState("");
-
+  const [currentSorting, setCurrentSorting] = useState({
+    column: "",
+    inc: false,
+  });
+  const [currentPlaying, setCurrentPlaying] = useState("");
   const { curTime, duration, playing, setSource, setPlaying, setClickedTime } =
     useAudioPlayer();
 
-  let [dateStart, dateEnd] = dates;
+  const [dateStart, dateEnd] = dates;
 
-  const pageSize = 20;
+  const pageSize = 50;
 
   useEffect(() => {
     loadwithDates();
   }, [dates, currentFilters]);
+
+  useEffect(() => {
+    if (currentSorting.column) {
+      setData(
+        [...data].sort((a, b) => {
+          console.log(a, b);
+          console.log(a[currentSorting.column], b[currentSorting.column]);
+          if (
+            currentSorting.inc
+              ? a[currentSorting.column] > b[currentSorting.column]
+              : a[currentSorting.column] < b[currentSorting.column]
+          ) {
+            console.log(true);
+            return 1;
+          } else {
+            console.log(false);
+            return -1;
+          }
+        })
+      );
+    }
+  }, [dates, currentSorting]);
 
   const setNewAudio = (id, blobUrl) => {
     if (id != currentPlaying) {
@@ -52,8 +78,6 @@ const CallList = () => {
     // setSound(newFile);
   };
 
-  // const setPlay = () =
-
   const pauseAudio = () => {
     setPlaying(false);
 
@@ -62,11 +86,15 @@ const CallList = () => {
 
   const loadMoreData = () => {
     setLoading(true);
-    api.getData(dateStart, dateEnd, pageSize, nextPage).then((resp) => {
-      setDataCount(resp.total_rows);
-      setData([resp.results, ...resp.results]);
-      setLoading(false);
-    });
+    api
+      .getData(dateStart, dateEnd, pageSize, nextPage, currentFilters.callTypes)
+      .then((resp) => {
+        setNextPage(nextPage + 1);
+        setCurrentSorting({ ...currentSorting });
+        setDataCount(Number(resp.total_rows));
+        setData([...data, ...resp.results]);
+        setLoading(false);
+      });
   };
 
   const loadwithDates = (dateFrom, dateTo) => {
@@ -80,9 +108,13 @@ const CallList = () => {
         currentFilters.callTypes
       )
       .then((resp) => {
-        setDataCount(resp.total_rows);
+        setDataCount(Number(resp.total_rows));
         setData(resp.results);
         setLoading(false);
+        setCurrentSorting({
+          column: "",
+          inc: false,
+        });
       });
   };
 
@@ -152,95 +184,186 @@ const CallList = () => {
     setCurrentFilters(newCurrent);
   };
 
-  const skeletons = [];
-  for (let i = 0; i < 15; i++) {
-    skeletons.push(
-      <div key={i} className={myStyles.listHat}>
-        <Space>
-          <Skeleton.Button active={true} size={"large"} block={true} />
-          <Skeleton.Avatar active={true} size={"large"} shape={"circle"} />
-          <Skeleton.Input active={true} size={"large"} block={true} />
-          <Skeleton.Button active={true} size={"large"} block={true} />
-          <Skeleton.Input active={true} size={"large"} block={true} />
-        </Space>
-      </div>
-    );
-  }
+  const changeCurrentSorting = (column, inc) => {
+    setCurrentSorting({ column, inc });
+    // setData(
+    //   [...data].sort((a, b) => {
+    //     console.log(a, b);
+    //     console.log(a[column], b[column]);
+    //     if (inc ? a[column] > b[column] : a[column] < b[column]) {
+    //       console.log(true);
+    //       return 1;
+    //     } else {
+    //       console.log(false);
+    //       return -1;
+    //     }
+    //   })
+    // );
+  };
+
+  const MySkeleton = ({ id }) => {
+    let skeletons = [];
+    for (let i = 1; i < 11; i++) {
+      skeletons.push(
+        <Skeleton
+          key={i}
+          active
+          title={{ width: "90%" }}
+          paragraph={{ rows: 0 }}
+        />
+      );
+    }
+    return <div className={myStyles.listHat}>{skeletons}</div>;
+  };
+
+  const MySkeletonsList = () => {
+    let skeletons = [];
+    for (let i = 1; i < 11; i++) {
+      skeletons.push(<MySkeleton key={i} id={i} />);
+    }
+
+    return <div>{skeletons}</div>;
+  };
 
   return (
-    <div>
+    <div className={myStyles.infiniteScrollWraper} id="scrollableDiv">
       <audio id="myAudio">
         <source src="" />
       </audio>
-      <div className={myStyles.dateSelector}>
-        <DateSelector
-          dateStart={dateStart}
-          dateEnd={dateEnd}
-          selectDates={selectDates}
-        />
-      </div>
-      <div className={myStyles.filters}>
-        <MyFilter
-          items={filters.callTypes}
-          title={"Тип звонка"}
-          current={currentFilters.callTypes}
-          type="callTypes"
-          changeCurrentFilter={changeCurrentFilter}
-        />
-        <MyFilter
-          items={filters.persons}
-          current={currentFilters.persons}
-          type="persons"
-          changeCurrentFilter={changeCurrentFilter}
-        />
-        <MyFilter
-          items={filters.calls}
-          current={currentFilters.calls}
-          type="calls"
-          changeCurrentFilter={changeCurrentFilter}
-        />
-        <MyFilter
-          items={filters.sources}
-          current={currentFilters.sources}
-          type="sources"
-          changeCurrentFilter={changeCurrentFilter}
-        />
-        <MyFilter
-          items={filters.marks}
-          current={currentFilters.marks}
-          type="marks"
-          changeCurrentFilter={changeCurrentFilter}
-        />
-      </div>
-      {/* <InfiniteScroll
-        dataLength={data.length}
+      <InfiniteScroll
+        dataLength={rows.length + 3}
         next={loadMoreData}
-        hasMore={data.length < dataCount}
-        loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-        // loader={<Spin size="large" />}
-        endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
-        style={{ display: "flex", flexDirection: "column-reverse" }}
+        hasMore={rows.length + 3 < dataCount}
+        loader={<MySkeleton paragraph={{ rows: 1 }} active />}
         scrollableTarget="scrollableDiv"
-        inverse={true}
-        // initialScrollY={3}
-      > */}
-      <div className={myStyles.listWrapper}>
+        // endMessage={"вот и всё"}
+      >
+        <div key={"myDateSelector"} className={myStyles.dateSelector}>
+          <DateSelector
+            dateStart={dateStart}
+            dateEnd={dateEnd}
+            selectDates={selectDates}
+          />
+        </div>
+        <div key={"myFilters"} className={myStyles.filters}>
+          <MyFilter
+            items={filters.callTypes}
+            title={"Тип звонка"}
+            current={currentFilters.callTypes}
+            type="callTypes"
+            changeCurrentFilter={changeCurrentFilter}
+          />
+          <MyFilter
+            items={filters.persons}
+            current={currentFilters.persons}
+            type="persons"
+            changeCurrentFilter={changeCurrentFilter}
+          />
+          <MyFilter
+            items={filters.calls}
+            current={currentFilters.calls}
+            type="calls"
+            changeCurrentFilter={changeCurrentFilter}
+          />
+          <MyFilter
+            items={filters.sources}
+            current={currentFilters.sources}
+            type="sources"
+            changeCurrentFilter={changeCurrentFilter}
+          />
+          <MyFilter
+            items={filters.marks}
+            current={currentFilters.marks}
+            type="marks"
+            changeCurrentFilter={changeCurrentFilter}
+          />
+        </div>
         <div className={myStyles.listHat}>
           <input type="checkbox" />
-          <div>Тип</div>
-          <div>Время</div>
-          <div>Сотрудник</div>
+          <div>
+            <MyColumn
+              title={"Тип"}
+              inc={
+                currentSorting.column === "in_out"
+                  ? currentSorting.inc
+                  : undefined
+              }
+              type="in_out"
+              setCurrentSorting={changeCurrentSorting}
+            />
+          </div>
+          <div>
+            <MyColumn
+              title={"Время"}
+              inc={
+                currentSorting.column === "date"
+                  ? currentSorting.inc
+                  : undefined
+              }
+              type="date"
+              setCurrentSorting={changeCurrentSorting}
+            />
+          </div>
+          <div>
+            <MyColumn
+              title={"Сотрудник"}
+              inc={
+                currentSorting.column === "person_surname"
+                  ? currentSorting.inc
+                  : undefined
+              }
+              type="person_surname"
+              setCurrentSorting={changeCurrentSorting}
+            />
+          </div>
           <div></div>
           <div></div>
-          <div>Звонок</div>
-
-          <div>Источник</div>
+          <div>
+            <MyColumn
+              title={"Звонок"}
+              inc={
+                currentSorting.column === "contact_name"
+                  ? currentSorting.inc
+                  : undefined
+              }
+              type="contact_name"
+              setCurrentSorting={changeCurrentSorting}
+            />
+          </div>
+          <div>
+            <MyColumn
+              title={"Источник"}
+              inc={
+                currentSorting.column === "source"
+                  ? currentSorting.inc
+                  : undefined
+              }
+              type="source"
+              setCurrentSorting={changeCurrentSorting}
+            />
+          </div>
           <div>Оценка</div>
-          <div className={myStyles.duration}>Длительность</div>
+          <div className={myStyles.duration}>
+            <MyColumn
+              title={"Длительность"}
+              inc={
+                currentSorting.column === "time"
+                  ? currentSorting.inc
+                  : undefined
+              }
+              type="time"
+              setCurrentSorting={changeCurrentSorting}
+            />
+          </div>
         </div>
-        {loading ? skeletons : rows}
-      </div>
-      {/* </InfiniteScroll> */}
+        {rows.length ? rows : <MySkeletonsList />}
+        {rows.length < 2 ? (
+          <div>
+            <div className={myStyles.divider}></div>
+            <div className={myStyles.extraItem}></div>
+          </div>
+        ) : null}
+      </InfiniteScroll>
     </div>
   );
 };

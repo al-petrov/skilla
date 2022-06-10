@@ -89,10 +89,10 @@ const App = () => {
 
   return (
     <Router>
-      <Layout>
+      <Layout className="my-ant-layaut">
         <Sider
           className="my-ant-layaut-sider"
-          breakpoint="lg"
+          breakpoint="xl"
           collapsedWidth="0"
           width="240px"
         >
@@ -120,12 +120,7 @@ const App = () => {
               <img className="avatar" src={avatar} alt={"аватар"} />
             </div>
           </Header>
-          <Content
-            className="my-ant-layaut-content"
-            style={{
-              margin: "0px 120px 0",
-            }}
-          >
+          <Content className="my-ant-layaut-content">
             <Routes>
               <Route path="/calls" element={<CallList />}></Route>
             </Routes>

@@ -5,6 +5,10 @@
   margin-left: 12px;
 }
 
+.my-ant-layaut {
+  height: 100vh;
+}
+
 .myHeader {
   display: flex;
   height: 64px;
@@ -79,6 +83,19 @@
 .my-ant-layaut-content {
   background: #f1f4f9;
   font-family: "SFProDisplay";
+  padding: 0px 20px;
+  overflow-y: auto;
+}
+
+/* f1f4f9 */
+
+@media only screen and (min-width: 1280px) {
+  .my-ant-layaut-content {
+    background: #f1f4f9;
+    font-family: "SFProDisplay";
+    padding: 0px 120px;
+    overflow-y: auto;
+  }
 }
 
 .my-ant-layaut-sider {

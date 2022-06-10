@@ -1,12 +1,14 @@
 .datePicker {
   display: flex;
-  width: 130px;
+  width: 100%;
   align-items: center;
 }
 
 .datePickerIcon {
   align-items: center;
-  margin-left: 29px;
+  padding-right: 20px;
+  /* justify-self: flex-end; */
+  /* margin-left: 10px; */
 }
 
 .datePickerIcon svg {
@@ -14,7 +16,7 @@
 }
 
 .datePickerInput {
-  width: 116px;
+  width: 140px;
   height: 40px;
   border: none;
   outline: none;

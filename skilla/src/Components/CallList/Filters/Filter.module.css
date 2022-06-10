@@ -35,6 +35,10 @@
   width: 204px;
 }
 
+.filterTitle {
+  display: flex;
+}
+
 .myDateSelector {
   color: #005ff8;
   font-size: 14px;
@@ -55,7 +59,7 @@
   cursor: pointer;
 }
 
-.dropdown:hover {
+.dropdownHovered {
   position: relative;
   margin-left: 36px;
   display: inline-block;

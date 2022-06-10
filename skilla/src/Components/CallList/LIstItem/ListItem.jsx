@@ -1,5 +1,5 @@
 import myStyles from "./ListItem.module.css";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import inCallBlue from "../../../icons/inCallBlue.svg";
 import inCallRed from "../../../icons/inCallRed.svg";
 import outCallGreen from "../../../icons/outCallRed.svg";
@@ -150,7 +150,7 @@ const ListItem = (props) => {
   };
 
   return (
-    <div>
+    <div className={myStyles.itemBackground}>
       <div className={myStyles.divider}></div>
       <div
         className={hovered ? myStyles.listItemHovered : myStyles.listItem}

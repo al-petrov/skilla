@@ -1,0 +1,19 @@
+.container {
+  width: 10px;
+  height: 6px;
+  margin-left: 5px;
+}
+
+.container svg {
+  fill: #adbfdf;
+}
+
+.containerHovered {
+  width: 10px;
+  height: 6px;
+  margin-left: 5px;
+}
+
+.containerHovered svg {
+  fill: #005ff8;
+}

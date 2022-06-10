@@ -1,3 +1,7 @@
+.itemBackground {
+  background-color: #ffffff;
+}
+
 .divider {
   width: 97%;
   height: 1px;
@@ -11,7 +15,6 @@
   height: 65px;
   align-items: center;
   justify-items: start;
-  background-color: #ffffff;
   padding: 0 0 0 0.9%;
 }
 
@@ -24,7 +27,7 @@
   background-color: #d4dff32b;
   padding: 0 0 0 0.9%;
 }
-
+/* d4dff32b */
 .callTime {
   font-size: 15px;
   font-weight: 400;
@@ -78,18 +81,23 @@ input[type="checkbox"] {
   font-weight: 400;
   font-size: 15px;
   color: #122945;
+  /* justify-content: end; */
 }
 
 .player {
   display: flex;
+  width: 100%;
   align-items: center;
   background-color: #eaf0fa;
   border-radius: 48px;
   height: 48px;
-  padding: 0 3%;
+  /* padding: 0 3%; */
+  justify-self: end;
+  /* justify-content: end; */
 }
 
 .player svg {
+  min-width: 12px;
   margin: 0 2%;
   fill: #adbfdf;
   cursor: pointer;
@@ -99,8 +107,8 @@ input[type="checkbox"] {
   fill: #005ff8;
 }
 
-.player:last-child {
-  margin-right: 1.6%;
+.player svg:last-child {
+  margin-right: 20px;
 }
 
 .playButton {
@@ -118,6 +126,7 @@ input[type="checkbox"] {
 
 .playerDuration {
   margin-left: 5%;
+  min-width: 40px;
 }
 
 .duration {

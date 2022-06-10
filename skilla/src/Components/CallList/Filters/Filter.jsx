@@ -1,9 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import "react-datepicker/dist/react-datepicker.css";
+import React, { useCallback, useRef, useState } from "react";
 import myStyles from "./Filter.module.css";
+import FilterArrow from "./../../Common/FilterArrow";
 
 const MyFilter = (props) => {
   const [visible, setVisible] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [arrowUp, setArrowUp] = useState(false);
 
   const myDropdown = useRef(null);
   const onClickCheck = useCallback((e) => {
@@ -29,11 +31,13 @@ const MyFilter = (props) => {
 
   const showMenu = (e) => {
     setVisible(!visible);
+    setArrowUp(!arrowUp);
     document.addEventListener("click", onClickCheck);
   };
 
   const hideMenu = () => {
     document.removeEventListener("click", onClickCheck);
+    setArrowUp(false);
     setVisible(false);
   };
   const items = props.items.map((item) => {
@@ -54,10 +58,19 @@ const MyFilter = (props) => {
   });
 
   return (
-    <div className={myStyles.dropdown} onClick={showMenu} ref={myDropdown}>
-      <div>{findField(props.current, "value", "title")}</div>
+    <div
+      className={hovered ? myStyles.dropdownHovered : myStyles.dropdown}
+      onClick={showMenu}
+      ref={myDropdown}
+      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={() => setHovered(true)}
+    >
+      <div className={myStyles.filterTitle}>
+        <div>{findField(props.current, "value", "title")}</div>
+        <FilterArrow hovered={hovered} arrowUp={arrowUp} />
+      </div>
       <div
-        id="myDropdown"
+        // id="myDropdown"
         className={visible ? myStyles.show : myStyles.dropdownContent}
       >
         {items}
