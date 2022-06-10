@@ -231,9 +231,9 @@ const CallList = () => {
         <source src="" />
       </audio>
       <InfiniteScroll
-        dataLength={rows.length + 3}
+        dataLength={rows.length}
         next={loadMoreData}
-        hasMore={rows.length + 3 < dataCount}
+        hasMore={rows.length < dataCount}
         loader={<MySkeleton paragraph={{ rows: 1 }} active />}
         scrollableTarget="scrollableDiv"
         // endMessage={"вот и всё"}
@@ -364,6 +364,7 @@ const CallList = () => {
           </div>
         ) : null}
       </InfiniteScroll>
+      <div className={myStyles.endingDiv}></div>
     </div>
   );
 };

@@ -92,3 +92,8 @@
   height: 50vh;
   background-color: #ffffff;
 }
+
+.endingDiv {
+  display: flex;
+  height: 135px;
+}
