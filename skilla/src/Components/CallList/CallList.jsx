@@ -19,14 +19,15 @@ const CallList = () => {
   ]);
   const [nextPage, setNextPage] = useState(1);
   const [loading, setLoading] = useState(false);
+
   const [currentFilters, setCurrentFilters] = useState({
     callTypes: null,
     persons: null,
     calls: null,
     sources: null,
     marks: null,
-    mistakes: null,
   });
+
   const [currentSorting, setCurrentSorting] = useState({
     column: "",
     inc: false,
@@ -142,7 +143,6 @@ const CallList = () => {
     calls: [{ key: "1", value: null, title: "Все звонки" }],
     sources: [{ key: "1", value: null, title: "Все источники" }],
     marks: [{ key: "1", value: null, title: "Все оценки" }],
-    mistakes: [{ key: "1", value: null, title: "Все ошибки" }],
   };
 
   let personsSet = new Set(["1"]);
@@ -178,6 +178,23 @@ const CallList = () => {
     );
   });
 
+  const MyFilters = () => {
+    let myFiltersList = [];
+    let i = 0;
+    for (let value in filters) {
+      myFiltersList.push(
+        <MyFilter
+          key={i++}
+          items={filters[value]}
+          current={currentFilters[value]}
+          type="callTypes"
+          changeCurrentFilter={changeCurrentFilter}
+        />
+      );
+    }
+    return <div className={myStyles.filters}>{myFiltersList}</div>;
+  };
+
   const changeCurrentFilter = (filter, value) => {
     let newCurrent = { ...currentFilters };
     newCurrent[filter] = value;
@@ -186,22 +203,88 @@ const CallList = () => {
 
   const changeCurrentSorting = (column, inc) => {
     setCurrentSorting({ column, inc });
-    // setData(
-    //   [...data].sort((a, b) => {
-    //     console.log(a, b);
-    //     console.log(a[column], b[column]);
-    //     if (inc ? a[column] > b[column] : a[column] < b[column]) {
-    //       console.log(true);
-    //       return 1;
-    //     } else {
-    //       console.log(false);
-    //       return -1;
-    //     }
-    //   })
-    // );
   };
 
-  const MySkeleton = ({ id }) => {
+  const myColumns = [
+    {
+      key: "1",
+      title: "Тип",
+      column: "in_out",
+      active: true,
+      action: changeCurrentSorting,
+    },
+    {
+      key: "2",
+      title: "Время",
+      column: "date",
+      active: true,
+      action: changeCurrentSorting,
+    },
+    {
+      key: "3",
+      title: "Сотрудник",
+      column: "person_surname",
+      active: true,
+      action: changeCurrentSorting,
+    },
+    { key: "4", title: "", column: "from_site", active: false, action: null },
+    { key: "5", title: "", column: "date", active: false, action: null },
+    {
+      key: "6",
+      title: "Звонок",
+      column: "contact_name",
+      active: true,
+      action: changeCurrentSorting,
+    },
+    {
+      key: "7",
+      title: "Источник",
+      column: "source",
+      active: true,
+      action: changeCurrentSorting,
+    },
+    {
+      key: "8",
+      title: "Оценка",
+      column: "date",
+      active: false,
+      action: null,
+    },
+    {
+      key: "8",
+      title: "Длительность",
+      column: "time",
+      active: true,
+      action: changeCurrentSorting,
+      extraClassName: "duration",
+    },
+  ];
+
+  const myListHat = myColumns.map((item) => {
+    let col = null;
+    col = item.active ? (
+      <div className={item.extraClassName ? myStyles[item.extraClassName] : ""}>
+        <MyColumn
+          title={item.title}
+          inc={
+            currentSorting.column === item.column
+              ? currentSorting.inc
+              : undefined
+          }
+          type={item.column}
+          setCurrentSorting={changeCurrentSorting}
+        />
+      </div>
+    ) : (
+      <div className={item.extraClassName ? myStyles[item.extraClassName] : ""}>
+        {item.title}
+      </div>
+    );
+
+    return col;
+  });
+
+  const MySkeleton = () => {
     let skeletons = [];
     for (let i = 1; i < 11; i++) {
       skeletons.push(
@@ -219,7 +302,7 @@ const CallList = () => {
   const MySkeletonsList = () => {
     let skeletons = [];
     for (let i = 1; i < 11; i++) {
-      skeletons.push(<MySkeleton key={i} id={i} />);
+      skeletons.push(<MySkeleton key={i} />);
     }
 
     return <div>{skeletons}</div>;
@@ -236,7 +319,6 @@ const CallList = () => {
         hasMore={rows.length < dataCount}
         loader={<MySkeleton paragraph={{ rows: 1 }} active />}
         scrollableTarget="scrollableDiv"
-        // endMessage={"вот и всё"}
       >
         <div key={"myDateSelector"} className={myStyles.dateSelector}>
           <DateSelector
@@ -245,116 +327,10 @@ const CallList = () => {
             selectDates={selectDates}
           />
         </div>
-        <div key={"myFilters"} className={myStyles.filters}>
-          <MyFilter
-            items={filters.callTypes}
-            title={"Тип звонка"}
-            current={currentFilters.callTypes}
-            type="callTypes"
-            changeCurrentFilter={changeCurrentFilter}
-          />
-          <MyFilter
-            items={filters.persons}
-            current={currentFilters.persons}
-            type="persons"
-            changeCurrentFilter={changeCurrentFilter}
-          />
-          <MyFilter
-            items={filters.calls}
-            current={currentFilters.calls}
-            type="calls"
-            changeCurrentFilter={changeCurrentFilter}
-          />
-          <MyFilter
-            items={filters.sources}
-            current={currentFilters.sources}
-            type="sources"
-            changeCurrentFilter={changeCurrentFilter}
-          />
-          <MyFilter
-            items={filters.marks}
-            current={currentFilters.marks}
-            type="marks"
-            changeCurrentFilter={changeCurrentFilter}
-          />
-        </div>
+        <MyFilters />
         <div className={myStyles.listHat}>
           <input type="checkbox" />
-          <div>
-            <MyColumn
-              title={"Тип"}
-              inc={
-                currentSorting.column === "in_out"
-                  ? currentSorting.inc
-                  : undefined
-              }
-              type="in_out"
-              setCurrentSorting={changeCurrentSorting}
-            />
-          </div>
-          <div>
-            <MyColumn
-              title={"Время"}
-              inc={
-                currentSorting.column === "date"
-                  ? currentSorting.inc
-                  : undefined
-              }
-              type="date"
-              setCurrentSorting={changeCurrentSorting}
-            />
-          </div>
-          <div>
-            <MyColumn
-              title={"Сотрудник"}
-              inc={
-                currentSorting.column === "person_surname"
-                  ? currentSorting.inc
-                  : undefined
-              }
-              type="person_surname"
-              setCurrentSorting={changeCurrentSorting}
-            />
-          </div>
-          <div></div>
-          <div></div>
-          <div>
-            <MyColumn
-              title={"Звонок"}
-              inc={
-                currentSorting.column === "contact_name"
-                  ? currentSorting.inc
-                  : undefined
-              }
-              type="contact_name"
-              setCurrentSorting={changeCurrentSorting}
-            />
-          </div>
-          <div>
-            <MyColumn
-              title={"Источник"}
-              inc={
-                currentSorting.column === "source"
-                  ? currentSorting.inc
-                  : undefined
-              }
-              type="source"
-              setCurrentSorting={changeCurrentSorting}
-            />
-          </div>
-          <div>Оценка</div>
-          <div className={myStyles.duration}>
-            <MyColumn
-              title={"Длительность"}
-              inc={
-                currentSorting.column === "time"
-                  ? currentSorting.inc
-                  : undefined
-              }
-              type="time"
-              setCurrentSorting={changeCurrentSorting}
-            />
-          </div>
+          {myListHat}
         </div>
         {rows.length ? rows : <MySkeletonsList />}
         {rows.length < 2 ? (
