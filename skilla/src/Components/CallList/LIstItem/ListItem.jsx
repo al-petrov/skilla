@@ -11,7 +11,7 @@ import play from "./../../../icons/play.svg";
 import pause from "./../../../icons/pause.svg";
 import { api } from "../../../api/api";
 import { message } from "antd";
-import PlayerBar from "./PlayerBar";
+import PlayerBar, { getDurationString } from "./PlayerBar";
 
 const ListItem = (props) => {
   const [hovered, setHovered] = useState(false);
@@ -139,15 +139,15 @@ const ListItem = (props) => {
     }
   };
 
-  const getDurationString = () => {
-    let time = props.playerValues ? props.playerValues.curTime : props.time;
-    if (time) {
-      let minutes = Math.floor(time / 60);
-      let seconds = Math.floor(time - minutes * 60);
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-      return "" + minutes + ":" + seconds;
-    }
-  };
+  // const getDurationString = () => {
+  //   let time = props.playerValues ? props.playerValues.curTime : props.time;
+  //   if (time) {
+  //     let minutes = Math.floor(time / 60);
+  //     let seconds = Math.floor(time - minutes * 60);
+  //     seconds = seconds < 10 ? "0" + seconds : seconds;
+  //     return "" + minutes + ":" + seconds;
+  //   }
+  // };
 
   return (
     <div className={myStyles.itemBackground}>
@@ -194,7 +194,9 @@ const ListItem = (props) => {
             hovered || thisAudioLoaded ? (
               <div className={myStyles.player}>
                 <div className={myStyles.playerDuration}>
-                  {getDurationString()}
+                  {getDurationString(
+                    props.playerValues ? props.playerValues.curTime : props.time
+                  )}
                 </div>
                 <div className={myStyles.playButton}>
                   <button
@@ -245,7 +247,11 @@ const ListItem = (props) => {
                 </svg>
               </div>
             ) : (
-              <div className={myStyles.duration}>{getDurationString()}</div>
+              <div className={myStyles.duration}>
+                {getDurationString(
+                  props.playerValues ? props.playerValues.curTime : props.time
+                )}
+              </div>
             )
           ) : null}
         </div>

@@ -251,7 +251,7 @@ const CallList = () => {
       action: null,
     },
     {
-      key: "8",
+      key: "9",
       title: "Длительность",
       column: "time",
       active: true,
@@ -263,7 +263,10 @@ const CallList = () => {
   const myListHat = myColumns.map((item) => {
     let col = null;
     col = item.active ? (
-      <div className={item.extraClassName ? myStyles[item.extraClassName] : ""}>
+      <div
+        key={item.key}
+        className={item.extraClassName ? myStyles[item.extraClassName] : ""}
+      >
         <MyColumn
           title={item.title}
           inc={
@@ -276,7 +279,10 @@ const CallList = () => {
         />
       </div>
     ) : (
-      <div className={item.extraClassName ? myStyles[item.extraClassName] : ""}>
+      <div
+        key={item.key}
+        className={item.extraClassName ? myStyles[item.extraClassName] : ""}
+      >
         {item.title}
       </div>
     );
@@ -328,7 +334,7 @@ const CallList = () => {
           />
         </div>
         <MyFilters />
-        <div className={myStyles.listHat}>
+        <div key={"myListHat"} className={myStyles.listHat}>
           <input type="checkbox" />
           {myListHat}
         </div>
