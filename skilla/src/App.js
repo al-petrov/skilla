@@ -20,6 +20,8 @@ import search from "./icons/search.png";
 import avatar from "./icons/avatars.svg";
 import triangle from "./icons/triangle.png";
 import CallList from "./Components/CallList/CallList";
+import SiderButton from "./icons/button.svg";
+import PayButton from "./icons/pay.svg";
 
 const { Header, Content, Sider } = Layout;
 
@@ -100,6 +102,10 @@ const App = () => {
             <img src={myLogo} height="40px" alt="Skilla Logo" />
           </div>
           {menuItems}
+          <div className="my-sider-buttons">
+            <img src={SiderButton} />
+            <img src={PayButton} />
+          </div>
         </Sider>
         <Layout>
           <Header className="site-layout-sub-header-background">

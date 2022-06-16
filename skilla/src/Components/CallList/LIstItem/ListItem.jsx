@@ -157,14 +157,7 @@ const ListItem = (props) => {
         onMouseLeave={() => setHovered(false)}
         onMouseEnter={() => setHovered(true)}
       >
-        {hovered ? (
-          <input
-            type="checkbox"
-            className={hovered ? null : myStyles.displayNone}
-          />
-        ) : (
-          <div></div>
-        )}
+        {hovered ? <input type="checkbox" /> : <div></div>}
 
         <img src={typeCallImage} />
         <div className={myStyles.callTime}>{callTime}</div>
@@ -174,7 +167,8 @@ const ListItem = (props) => {
         <div className={myStyles.web}>
           {props.from_site ? <img src={web} /> : null}
         </div>
-        <img src={phone} />
+        {hovered ? <img className={myStyles.web} src={phone} /> : <div></div>}
+        {/* <img className={myStyles.web} src={phone} /> */}
         <div>
           <div className={myStyles.name}>
             {props.contact_name ? props.contact_name : props.from_number}

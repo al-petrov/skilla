@@ -69,10 +69,7 @@ const MyFilter = (props) => {
         <div>{findField(props.current, "value", "title")}</div>
         <FilterArrow hovered={hovered} arrowUp={arrowUp} />
       </div>
-      <div
-        // id="myDropdown"
-        className={visible ? myStyles.show : myStyles.dropdownContent}
-      >
+      <div className={visible ? myStyles.show : myStyles.dropdownContent}>
         {items}
       </div>
     </div>

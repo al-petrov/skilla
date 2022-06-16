@@ -142,3 +142,11 @@
 .site-layout-background {
   background: #ffffff;
 }
+
+.my-sider-buttons {
+  margin: 32px 20px;
+}
+
+.my-sider-buttons img {
+  margin-top: 32px;
+}

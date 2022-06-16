@@ -4,6 +4,7 @@
 
 .columnHat {
   display: inline-block;
+  color: #899cb1;
   border: 0px;
   cursor: pointer;
 }
