@@ -1,5 +1,7 @@
 import myStyles from "./ListItem.module.css";
 import React, { useEffect, useState } from "react";
+import InputMask from "react-input-mask";
+import NumberFormat from "react-number-format";
 import inCallBlue from "../../../icons/inCallBlue.svg";
 import inCallRed from "../../../icons/inCallRed.svg";
 import outCallGreen from "../../../icons/outCallRed.svg";
@@ -20,6 +22,11 @@ const ListItem = (props) => {
   const [playerValues, setPlayerValues] = useState();
   const [blobUrl, setBlobUrl] = useState("");
   const [downloading, setDownloading] = useState(false);
+
+  const hoverElement = (e) => {
+    setHovered(e);
+    props.setCheckVisible(e);
+  };
 
   useEffect(() => {
     if (props.playerValues) {
@@ -148,18 +155,29 @@ const ListItem = (props) => {
   //     return "" + minutes + ":" + seconds;
   //   }
   // };
+  let phoneNumber = props.from_number;
+  if (phoneNumber && phoneNumber[0] === "7") {
+    phoneNumber = (
+      <NumberFormat
+        value={props.from_number}
+        format="+# (###) ###-##-##"
+        mask=" "
+        disabled
+      />
+    );
+  }
 
   return (
     <div className={myStyles.itemBackground}>
       <div className={myStyles.divider}></div>
       <div
         className={hovered ? myStyles.listItemHovered : myStyles.listItem}
-        onMouseLeave={() => setHovered(false)}
-        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => hoverElement(false)}
+        onMouseEnter={() => hoverElement(true)}
       >
         {hovered ? <input type="checkbox" /> : <div></div>}
 
-        <img src={typeCallImage} />
+        <img style={{ marginLeft: "6px" }} src={typeCallImage} />
         <div className={myStyles.callTime}>{callTime}</div>
         <div className={myStyles.avatar}>
           <img src={props.person_avatar} />
@@ -171,7 +189,10 @@ const ListItem = (props) => {
         {/* <img className={myStyles.web} src={phone} /> */}
         <div>
           <div className={myStyles.name}>
-            {props.contact_name ? props.contact_name : props.from_number}
+            {
+              props.contact_name ? props.contact_name : phoneNumber
+              // <InputMask value={props.from_number} mask="+9(999)999-99-99" />
+            }
           </div>
           <div className={myStyles.company}>
             {props.contact_company

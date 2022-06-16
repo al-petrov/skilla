@@ -63,6 +63,11 @@ input[type="checkbox"] {
   color: #122945;
 }
 
+.name input {
+  border: none;
+  background: transparent;
+}
+
 .source {
   font-style: normal;
   font-size: 15px;

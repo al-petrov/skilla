@@ -40,8 +40,31 @@
   padding: 0 0 0 0.9%;
 }
 
+.daysDivider {
+  display: flex;
+  background-color: #ffffff;
+  font-size: 15px;
+  height: 78px;
+  align-items: center;
+  padding-left: 40px;
+}
+
+.callCount {
+  color: #899cb1;
+  font-size: 12px;
+  margin: 0 0 10px 4px;
+}
+
 .listHat:first-child {
   padding: 0 0 0 0.9%;
+}
+
+.checkInvisible {
+  display: flex;
+}
+
+.checkInvisible {
+  display: none;
 }
 
 .duration {

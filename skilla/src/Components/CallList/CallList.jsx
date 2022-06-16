@@ -19,7 +19,6 @@ const CallList = () => {
   ]);
   const [nextPage, setNextPage] = useState(1);
   const [loading, setLoading] = useState(false);
-
   const [currentFilters, setCurrentFilters] = useState({
     callTypes: null,
     persons: null,
@@ -27,12 +26,13 @@ const CallList = () => {
     sources: null,
     marks: null,
   });
-
   const [currentSorting, setCurrentSorting] = useState({
     column: "",
     inc: false,
   });
   const [currentPlaying, setCurrentPlaying] = useState("");
+  const [checkVisible, setCheckVisible] = useState(false);
+
   const { curTime, duration, playing, setSource, setPlaying, setClickedTime } =
     useAudioPlayer();
 
@@ -145,8 +145,28 @@ const CallList = () => {
     marks: [{ key: "1", value: null, title: "Все оценки" }],
   };
 
-  let personsSet = new Set(["1"]);
+  const Divider = (props) => {
+    let divText = "";
+    if (
+      props.newDate ===
+      new Date(
+        new Date(Date.now() - 86400000).setHours(3, 0, 0, 0)
+      ).toLocaleDateString("fr-CA")
+    ) {
+      divText = "вчера";
+    } else {
+      divText = props.newDate;
+    }
+    return (
+      <div className={myStyles.daysDivider}>
+        <div>{divText}</div>
+        <div className={myStyles.callCount}>67</div>
+      </div>
+    );
+  };
 
+  let personsSet = new Set(["1"]);
+  let previousDate = null;
   const rows = data.map((item) => {
     if (!personsSet.has(item.person_id)) {
       personsSet.add(item.person_id);
@@ -162,20 +182,48 @@ const CallList = () => {
         id: item.person_id,
       });
     }
-    return (
-      <ListItem
-        key={item.id}
-        id={item.id}
-        setNewAudio={setNewAudio}
-        pauseAudio={pauseAudio}
-        setClickedTime={setClickedTime}
-        playerValues={
-          currentPlaying === item.id ? { curTime, duration, playing } : null
-        }
-        nowPlaying={currentPlaying === item.id ? playing : null}
-        {...item}
-      />
-    );
+    if (
+      previousDate &&
+      !currentSorting.column &&
+      item.date_notime !== previousDate
+    ) {
+      previousDate = item.date_notime;
+      return (
+        <div>
+          <Divider newDate={item.date_notime} />
+          <ListItem
+            key={item.id}
+            id={item.id}
+            setNewAudio={setNewAudio}
+            pauseAudio={pauseAudio}
+            setClickedTime={setClickedTime}
+            playerValues={
+              currentPlaying === item.id ? { curTime, duration, playing } : null
+            }
+            nowPlaying={currentPlaying === item.id ? playing : null}
+            {...item}
+            setCheckVisible={setCheckVisible}
+          />
+        </div>
+      );
+    } else {
+      previousDate = item.date_notime;
+      return (
+        <ListItem
+          key={item.id}
+          id={item.id}
+          setNewAudio={setNewAudio}
+          pauseAudio={pauseAudio}
+          setClickedTime={setClickedTime}
+          playerValues={
+            currentPlaying === item.id ? { curTime, duration, playing } : null
+          }
+          nowPlaying={currentPlaying === item.id ? playing : null}
+          {...item}
+          setCheckVisible={setCheckVisible}
+        />
+      );
+    }
   });
 
   const MyFilters = () => {
@@ -334,8 +382,28 @@ const CallList = () => {
           />
         </div>
         <MyFilters />
-        <div key={"myListHat"} className={myStyles.listHat}>
-          <input type="checkbox" />
+        <div
+          key={"myListHat"}
+          className={myStyles.listHat}
+          onMouseEnter={() => setCheckVisible(true)}
+          onMouseLeave={() => setCheckVisible(false)}
+        >
+          {checkVisible ? (
+            <input
+              type="checkbox"
+              className={
+                checkVisible ? myStyles.checkVisible : myStyles.checkInvisible
+              }
+            />
+          ) : (
+            <div></div>
+          )}
+          {/* <input
+            type="checkbox"
+            className={
+              checkVisible ? myStyles.checkVisible : myStyles.checkInvisible
+            }
+          /> */}
           {myListHat}
         </div>
         {rows.length ? rows : <MySkeletonsList />}
